@@ -1,20 +1,32 @@
-# Redis Solution Starter - Golang
+This is a starting point for Go solutions to the
+["Build Your Own Redis" Challenge](https://codecrafters.io/challenges/redis).
 
-This is a starting point for Golang solutions to the Redis Challenge.
+In this challenge, you'll build a toy Redis clone that's capable of handling
+basic commands like `PING`, `SET` and `GET`. Along the way we'll learn about
+event loops, the Redis protocol and more.
 
-**Steps to get started**:
+**Note**: If you're viewing this repo on GitHub, head over to
+[codecrafters.io](https://codecrafters.io) to signup for early access.
 
-- Get a leaderboard URL & API key from Paul
-- Ensure your API key is available as `$REDIS_CHALLENGE_API_KEY`
-(env var)
-- Ensure you have `go` installed locally
-- Clone this repository
+# Passing the first stage
 
-**Workflow**:
+The entry point for your Redis implementation is in `app/server.go`. Study and
+uncomment the relevant code, and push your changes to pass the first stage:
 
-- Run `make download_tester_mac` (or `download_tester_linux`, if you're running linux)
-- Run `make test`. You should see a failure message at this point.
-- Implement the required feature in `app/server.go`, iterate until `make test` passes.
-- If you want more verbose output for errors, use `make test_debug` instead of `make test`)
-- Once `make test` passes, run `make test_and_report`.
-- Bump `current_stage` in your Makefile to go to the next stage!
+```sh
+git add .
+git commit -m "pass 1st stage" # any msg
+git push origin master
+```
+
+That's all!
+
+# Stage 2 & beyond
+
+Note: This section is for stages 2 and beyond.
+
+1. Ensure you have `go (1.13)` installed locally
+1. Run `./spawn_redis_server.sh` to run your Redis server, which is implemented
+   in `app/server.go`.
+1. Commit your changes and run `git push origin master` to submit your solution
+   to CodeCrafters. Test output will be streamed to your terminal.
