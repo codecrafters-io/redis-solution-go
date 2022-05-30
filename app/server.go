@@ -13,9 +13,16 @@ func main() {
 		os.Exit(1)
 	}
 
-	_, err = l.Accept()
+	conn, err := l.Accept()
 	if err != nil {
 		fmt.Println("Error accepting connection: ", err.Error())
 		os.Exit(1)
 	}
+
+	if _, err := conn.Read([]byte{}); err != nil {
+		fmt.Println("error reading from client: ", err.Error())
+		os.Exit(1)
+	}
+
+	conn.Write([]byte("+PONG\r\n"))
 }
