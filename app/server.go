@@ -14,6 +14,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	storage := NewStorage()
+
 	for {
 		conn, err := l.Accept()
 		if err != nil {
@@ -21,11 +23,11 @@ func main() {
 			os.Exit(1)
 		}
 
-		go handleConnection(conn)
+		go handleConnection(conn, storage)
 	}
 }
 
-func handleConnection(conn net.Conn) {
+func handleConnection(conn net.Conn, storage *Storage) {
 	for {
 		value, err := DecodeRESP(bufio.NewReader(conn))
 		if err != nil {
@@ -41,6 +43,11 @@ func handleConnection(conn net.Conn) {
 			conn.Write([]byte("+PONG\r\n"))
 		case "echo":
 			conn.Write([]byte(fmt.Sprintf("$%d\r\n%s\r\n", len(args[0].String()), args[0].String())))
+		case "set":
+			storage.Set(args[0].String(), args[1].String())
+			conn.Write([]byte("+OK\r\n"))
+		case "get":
+			conn.Write([]byte(fmt.Sprintf("+%s\r\n", storage.Get(args[0].String()))))
 		default:
 			conn.Write([]byte("-ERR unknown command '" + command + "'\r\n"))
 		}
